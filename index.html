@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Biodiversiteit</title>
+	
+	<script src="https://d3js.org/d3.v7.min.js"></script>
+	<script type="text/javascript" src="scrippie.js" defer></script>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<!-- <table>
+	<tr>
+		<th>Variabele</th>
+		<th>Waarde</th>
+	</tr>
+	<tr>
+		<td>CO2</td>
+		<td><input type="range" min="0" max = "100" id="co2"></td>
+	</tr>
+	<tr>
+		<td>biodivers</td>
+		<td><input type="number" min="0" max = "100" id="biodiv"></td>
+	</tr>
+	<tr>
+		<td>bos</td>
+		<td><input type="range" min="0" max = "255"  id="bos"></td>
+	</tr>
+	</table>
+	<button type="button" onclick="generateGraphic()">Generate</button>
+
+
+	<h2>Hoe veel dagen in de week eet jij vlees?</h2>
+	<input type="range" min="0" max = "7" id="vlees">
+
+	<h2>Welke tuin heb je liever?</h2>
+	<input type="radio" name="tuin" id="groen" value="100">
+	<input type="radio" name="tuin" id="leeg" value="0"> -->
+
+	<form id="regForm" action="">
+		<!-- One "tab" for each step in the form: -->
+		<div class="tab">Hoeveel dagen per week eet jij vlees?
+		  <p><input type="range" min="0" max = "7" oninput="this.className = ''" value="0" step="1" id="vlees"oninput="rangevalue.innerText=value"></p>
+		  <p><span id="vleesWaarde"></span></p>
+		</div>
+		
+		<div class="tab">Welke tuin heb je liever?
+			<p hidden><input type="radio" name="tuin" id="placeholderRadio" value="" oninput="this.className = ''" checked></p>
+			<div id="imagequestion">
+		  <p><img src="images/Tuin_1.jpg"><input type="radio" name="tuin" id="tuin" value="10" oninput="this.className = ''"></p>
+		  <p><img src="images/Tuin_2.jpg"><input type="radio" name="tuin" id="tuin" value="0" oninput="this.className = ''"></p>
+		  <p><img src="images/Tuin_3.jpg"><input type="radio" name="tuin" id="tuin" value="20" oninput="this.className = ''"></p>
+			</div>
+		</div>
+		
+		<div class="tab">Omschrijf je dagelijkse reis:
+		  <p><input placeholder="Afstand in km" type="number" oninput="this.className = ''" id="afstand" max="100"></p>
+		  <select name="voertuig" id="voertuig">
+			<option value="3">Benzine auto</option>
+			<option value="5">Diesel auto</option>
+			<option value="2">Elektrische auto</option>
+			<option value="0">Fiets/Te voet</option>
+			<option value="1">OV</option>
+		  </select>
+		</div>
+
+		<div class="tab">Hoeveel jaar doe je gemiddeld met je telefoon?
+			<p><input type="range" min="1" max = "7" oninput="this.className = ''" value="0" step="1" id="telefoon"></p>
+			<p><span id="telefoonWaarde"></span></p>
+		  </div>
+
+		  <div class="tab">Met welk vervoersmiddel ga je meestal op vakantie?
+			<p hidden><input type="radio" name="vakantievoertuig" id="placeholderRadio" value="" oninput="this.className = ''" checked></p>
+			<div id="imagequestion">
+		  <p><img src="images/Vakantie_1.jpg" width="400" height="240"><input type="radio" name="vakantievoertuig" id="vakantievoertuig" value="50" oninput="this.className = ''"></p>
+		  <p><img src="images/Vakantie_2.jpg" width="400" height="240"><input type="radio" name="vakantievoertuig" id="vakantievoertuig" value="10" oninput="this.className = ''"></p>
+		  <p><img src="images/Vervoer_2.jpg" width="400" height="240"><input type="radio" name="vakantievoertuig" id="vakantievoertuig" value="20" oninput="this.className = ''"></p>
+		  </div>
+		</div>
+
+		<div class="tab">Welke bestemming ga je meestal op vakantie?
+			<p hidden><input type="radio" name="vakantiebestemming" id="placeholderRadio" value="" oninput="this.className = ''" checked></p>
+			<div id="imagequestion">
+		  <p style="text-align:center">Als ik op vakantie ga blijf ik in Nederland<input type="radio" name="vakantiebestemming" id="vakantiebestemming" value="1" oninput="this.className = ''"></p>
+		  <p style="text-align:center">Ik kies meestal een land in Europa<input type="radio" name="vakantiebestemming" id="vakantiebestemming" value="3" oninput="this.className = ''"></p>
+		  <p style="text-align:center">Ik kies meestal een land buiten Europa<input type="radio" name="vakantiebestemming" id="vakantiebestemming" value="5" oninput="this.className = ''"></p>
+		  </div>
+		</div>
+
+		<div class="tab">Hoe geef jij je planten water?
+			<p hidden><input type="radio" name="plantenwater" id="placeholderRadio" value="" oninput="this.className = ''" checked> </p>
+			<div id="imagequestion">
+		  <p style="text-align:center">Drinkwater<input type="radio" name="plantenwater" id="plantenwater" value="0" oninput="this.className = ''"></p>
+		  <p style="text-align:center">Regenwater<input type="radio" name="plantenwater" id="plantenwater" value="10" oninput="this.className = ''"></p>
+		  <p style="text-align:center">Ik heb geen planten<input type="radio" name="plantenwater" id="plantenwater" value="0" oninput="this.className = ''"></p>
+		  </div>
+		</div>
+
+		<div class="tab">Welk dak zou jij kiezen voor je droomhuis?
+			<p hidden><input type="radio" name="dak" id="placeholderRadio" value="" oninput="this.className = ''" checked></p>
+			<div id="imagequestion">
+		  <p><img src="images/Dak_1.jpg" width="500" height="300"><input type="radio" name="dak" id="dak" value="10" oninput="this.className = ''"></p>
+		  <p><img src="images/Dak_2.jpg" width="500" height="300"><input type="radio" name="dak" id="dak" value="10" oninput="this.className = ''"></p>
+		  <p><img src="images/Dak_3.jpg" width="500" height="300"><input type="radio" name="dak" id="dak" value="0" oninput="this.className = ''"></p>
+		  </div>
+		</div>
+
+		<div class="tab">Hoevaak in de maand maak ik gebruik van een printer?
+			<p><input type="range" min="0" max = "10" oninput="this.className = ''" value="0" step="1" id="printer"></p>
+			<p><span id="printerWaarde"></span></p>
+		  </div>
+		
+		<div style="overflow:auto;">
+		  <div style="float:right;">
+			<button type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
+			<button type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
+		  </div>
+		</div>
+		
+		<!-- Circles which indicates the steps of the form: -->
+		<div style="text-align:center;margin-top:40px;">
+		  <span class="step"></span>
+		  <span class="step"></span>
+		  <span class="step"></span>
+		  <span class="step"></span>
+		  <span class="step"></span>
+		  <span class="step"></span>
+		  <span class="step"></span>
+		  <span class="step"></span>
+		  <span class="step"></span>
+		</div>
+		
+		</form>
+</body>
+</html>
